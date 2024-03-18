@@ -1,0 +1,20 @@
+spring:
+    data:
+        mongodb:
+            uri: mongodb://root:example@localhost:27017/?authMechanism=SCRAM-SHA-256
+            database: chat_app_database
+#            host: localhost
+#            port: 27017
+#            username: root
+#            password: example
+#           db.createUser({user:'springbootapp',pwd:'springbootapp',roles:[{role:'dbAdmin',db:'chat_app'}]})
+
+
+    application:
+        name: chatApp
+
+logging:
+    level:
+        org.springframework.data.mongodb.core.MongoTemplate: TRACE
+
+
