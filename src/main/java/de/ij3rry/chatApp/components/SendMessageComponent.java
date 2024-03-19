@@ -23,9 +23,5 @@ public class SendMessageComponent {
     }
     public void sendMessagesToUser(UUID userId, OutgoingMessageDTO message){
         messagingTemplate.convertAndSendToUser(userId.toString(),"/topic/messages",message);
-        AppUserDocument c = new AppUserDocument();
-        c.setPrivateID(UUID.randomUUID());
-        c.setPublicID(UUID.randomUUID());
-        AppUserDocument appUserDocument = appUserRepository.save(c);
     }
 }
