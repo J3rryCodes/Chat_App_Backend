@@ -6,7 +6,7 @@ import de.ij3rry.chatApp.documents.AppUserDocument;
 import de.ij3rry.chatApp.documents.InboundMessageDocument;
 import de.ij3rry.chatApp.documents.OnlineUserDocument;
 import de.ij3rry.chatApp.dots.CheckInDTO;
-import de.ij3rry.chatApp.dots.IncommingMessageDTO;
+import de.ij3rry.chatApp.dots.IncomingMessageDTO;
 import de.ij3rry.chatApp.dots.OutgoingMessageDTO;
 import de.ij3rry.chatApp.repositories.AppUserRepository;
 import de.ij3rry.chatApp.repositories.InboundMessageRepository;
@@ -61,7 +61,7 @@ public final class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void handleIncomingMessage(IncommingMessageDTO incommingMessageDTO) {
+    public void handleIncomingMessage(IncomingMessageDTO incommingMessageDTO) {
         final AppUserDocument fromUser = appUserRepository.findByPrivateID(incommingMessageDTO.getPrivateUserID());
         if( fromUser == null )
             return;

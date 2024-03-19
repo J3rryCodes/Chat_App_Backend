@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.util.UUID;
 
 @Data
-@Document
+@Document("inbound_message")
 public class InboundMessageDocument {
     @MongoId
     private String id;

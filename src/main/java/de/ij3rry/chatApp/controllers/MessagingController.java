@@ -1,7 +1,7 @@
 package de.ij3rry.chatApp.controllers;
 
 import de.ij3rry.chatApp.dots.CheckInDTO;
-import de.ij3rry.chatApp.dots.IncommingMessageDTO;
+import de.ij3rry.chatApp.dots.IncomingMessageDTO;
 import de.ij3rry.chatApp.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -17,8 +17,8 @@ public class MessagingController {
         this.chatService = chatService;
     }
     @MessageMapping("/sentMessage")
-    public void receiveMessage(IncommingMessageDTO incommingMessageDTO){
-        chatService.handleIncomingMessage(incommingMessageDTO);
+    public void receiveMessage(IncomingMessageDTO incomingMessageDTO){
+        chatService.handleIncomingMessage(incomingMessageDTO);
     }
 
     @MessageMapping("/online")

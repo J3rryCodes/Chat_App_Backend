@@ -1,20 +1,18 @@
 package de.ij3rry.chatApp.documents;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.List;
 import java.util.UUID;
 
-@Document(collection = "app_user")
 @Data
-public class AppUserDocument {
+@Document("app_user_role")
+public class AppUserRoleDocument {
     @MongoId
     private String id;
-    private String username;
-    private UUID publicID;
-    private UUID privateID;
-    private UUID topicID;
-    private String password;
-    private boolean online;
+    private UUID privateId;
+    List<String> userRole;
 }

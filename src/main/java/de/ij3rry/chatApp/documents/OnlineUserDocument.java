@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.util.UUID;
 
 @Data
-@Document
+@Document("online_user")
 public class OnlineUserDocument {
     @MongoId
     private String id;
