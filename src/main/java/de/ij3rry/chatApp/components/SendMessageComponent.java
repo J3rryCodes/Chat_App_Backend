@@ -1,6 +1,5 @@
 package de.ij3rry.chatApp.components;
 
-import de.ij3rry.chatApp.documents.AppUserDocument;
 import de.ij3rry.chatApp.dots.OutgoingMessageDTO;
 import de.ij3rry.chatApp.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,10 @@ import java.util.UUID;
 public class SendMessageComponent {
 
     private SimpMessagingTemplate messagingTemplate;
-    private AppUserRepository appUserRepository;
 
     @Autowired
-    SendMessageComponent(SimpMessagingTemplate messagingTemplate,AppUserRepository appUserRepository){
+    SendMessageComponent(SimpMessagingTemplate messagingTemplate){
         this.messagingTemplate = messagingTemplate;
-        this.appUserRepository = appUserRepository;
     }
     public void sendMessagesToUser(UUID userId, OutgoingMessageDTO message){
         messagingTemplate.convertAndSendToUser(userId.toString(),"/topic/messages",message);
