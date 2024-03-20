@@ -1,8 +1,12 @@
 package de.ij3rry.chatApp.components;
 
+import de.ij3rry.chatApp.documents.AppUserDocument;
+import de.ij3rry.chatApp.repositories.AppUserRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +22,14 @@ import java.util.function.Function;
 
 @Component
 public class JWTComponent {
+
+    private final AppUserRepository appUserRepository;
+
+    @Autowired
+    public JWTComponent(AppUserRepository appUserRepository){
+        this.appUserRepository = appUserRepository;
+    }
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -63,21 +75,18 @@ public class JWTComponent {
         final String username = extractUsername(token);
         if(username.equals(userDetails.getUsername()) && !isTokenExpired(token) && validateRoles(token,userDetails)) {
             List<GrantedAuthority> authority = List.of(new SimpleGrantedAuthority(extractClaim(token, claims -> claims.get(ROLE)).toString()));
-            return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, authority);
+            AppUserDocument appUserDocument = appUserRepository.findByUsername(userDetails.getUsername());
+            return new UsernamePasswordAuthenticationToken(appUserDocument.getPrivateID(), null, authority);
         }
         throw new UsernameNotFoundException("Invalid token");
     }
 
     public Boolean validateRoles(String token, UserDetails userDetails){
         Claims claims = extractAllClaims(token);
-        List<String> tokenRoles = (List<String>) claims.get("roles");
+        String tokenRole = (String) claims.get(ROLE);
         List<String> assignedRoles = userDetails.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).toList();
-        /* If any of the roles in the token mismatches with the assigned role then it's a corrupted token */
-        for(String tokenRole : tokenRoles){
-            if( !assignedRoles.contains(tokenRole) )
-                return false;
-        }
-        return true;
+
+        return assignedRoles.contains(tokenRole);
     }
 
 

@@ -9,6 +9,8 @@ spring:
 logging:
     level:
         org.springframework.data.mongodb.core.MongoTemplate: TRACE
+        org.springframework.security: TRACE
+
 jwt:
     secret: hehejerin
 

@@ -5,24 +5,24 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
+@Component
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private final JWTComponent jwtComponent;
 
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationTokenFilter(AuthenticationManager authenticationManager, JWTComponent jwtComponent,UserDetailsService userDetailsService) {
-        super(authenticationManager);
+    public JwtAuthenticationTokenFilter(JWTComponent jwtComponent,UserDetailsService userDetailsService) {
         this.jwtComponent = jwtComponent;
         this.userDetailsService = userDetailsService;
     }
@@ -30,15 +30,11 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
-
-        if (header == null || !header.startsWith("Bearer ")) {
-            chain.doFilter(request, response);
-            return;
+        if (header != null) {
+            Authentication authentication = getAuthentication(request);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        Authentication authentication = getAuthentication(request);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
 
