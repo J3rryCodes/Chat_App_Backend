@@ -74,7 +74,7 @@ public class JWTComponent {
     public UsernamePasswordAuthenticationToken validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         if(username.equals(userDetails.getUsername()) && !isTokenExpired(token) && validateRoles(token,userDetails)) {
-            List<GrantedAuthority> authority = List.of(new SimpleGrantedAuthority(extractClaim(token, claims -> claims.get(ROLE)).toString()));
+            List<GrantedAuthority> authority = List.of(new SimpleGrantedAuthority(extractClaim(token, claims -> "ROLE_"+claims.get(ROLE)).toString()));
             AppUserDocument appUserDocument = appUserRepository.findByUsername(userDetails.getUsername());
             return new UsernamePasswordAuthenticationToken(appUserDocument.getPrivateID(), null, authority);
         }

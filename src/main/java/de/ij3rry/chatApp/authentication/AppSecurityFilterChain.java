@@ -25,7 +25,8 @@ public class AppSecurityFilterChain {
     public SecurityFilterChain publicFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth.requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/user/**").authenticated())
+                        .requestMatchers("/user/**").hasRole(UserRoles.USER)
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(Customizer.withDefaults());
         return http.build();
