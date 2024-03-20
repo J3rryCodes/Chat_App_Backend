@@ -8,8 +8,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    @PostMapping("/get")
-    public String getH(){
-        return "gg";
-    }
 }

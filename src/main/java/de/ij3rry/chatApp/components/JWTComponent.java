@@ -3,7 +3,6 @@ package de.ij3rry.chatApp.components;
 import de.ij3rry.chatApp.documents.AppUserDocument;
 import de.ij3rry.chatApp.repositories.AppUserRepository;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +73,7 @@ public class JWTComponent {
     public UsernamePasswordAuthenticationToken validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         if(username.equals(userDetails.getUsername()) && !isTokenExpired(token) && validateRoles(token,userDetails)) {
+            /* had to hard code ROLE_ because that was the only fix as of now */
             List<GrantedAuthority> authority = List.of(new SimpleGrantedAuthority(extractClaim(token, claims -> "ROLE_"+claims.get(ROLE)).toString()));
             AppUserDocument appUserDocument = appUserRepository.findByUsername(userDetails.getUsername());
             return new UsernamePasswordAuthenticationToken(appUserDocument.getPrivateID(), null, authority);
