@@ -1,6 +1,7 @@
 package de.ij3rry.chatApp.services.impl;
 
 import de.ij3rry.chatApp.components.JWTComponent;
+import de.ij3rry.chatApp.constants.UserRoles;
 import de.ij3rry.chatApp.documents.AppUserDocument;
 import de.ij3rry.chatApp.documents.AppUserRoleDocument;
 import de.ij3rry.chatApp.repositories.AppUserRepository;
@@ -49,14 +50,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String loginUsingUsernameAndPassword(String username, String password) {
+    public String loginUsingUsernameAndPasswordForUser(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username,password)
         );
 
-        if (authentication.isAuthenticated()) {
-            List<String> authorities = authentication.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).toList();
-            return jwtComponent.generateToken(username,authorities);
+
+        List<String> authorities = authentication.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).toList();
+        if (authentication.isAuthenticated() && authorities.contains(UserRoles.USER)) {
+            return jwtComponent.generateToken(username,UserRoles.USER);
         } else {
             throw new UsernameNotFoundException("Invalid user request!");
         }

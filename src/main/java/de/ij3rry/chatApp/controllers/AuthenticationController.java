@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/public")
 public class AuthenticationController {
@@ -21,7 +19,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     String login(String username,String password){
-        return authenticationService.loginUsingUsernameAndPassword(username,password);
+        return authenticationService.loginUsingUsernameAndPasswordForUser(username,password);
     }
 
     @PostMapping("/register")
