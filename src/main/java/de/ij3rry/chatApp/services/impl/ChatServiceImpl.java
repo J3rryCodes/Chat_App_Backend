@@ -5,20 +5,15 @@ import de.ij3rry.chatApp.components.SendMessageComponent;
 import de.ij3rry.chatApp.converters.DTOToDocumentConverter;
 import de.ij3rry.chatApp.documents.AppUserDocument;
 import de.ij3rry.chatApp.documents.InboundMessageDocument;
-import de.ij3rry.chatApp.documents.OnlineUserDocument;
 import de.ij3rry.chatApp.dots.CheckInDTO;
 import de.ij3rry.chatApp.dots.IncomingMessageDTO;
 import de.ij3rry.chatApp.dots.OutgoingMessageDTO;
 import de.ij3rry.chatApp.repositories.AppUserRepository;
 import de.ij3rry.chatApp.repositories.InboundMessageRepository;
-import de.ij3rry.chatApp.repositories.OnlineUserRepository;
 import de.ij3rry.chatApp.services.ChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessageHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +28,12 @@ public final class ChatServiceImpl implements ChatService {
 
     private final AppUserRepository appUserRepository;
 
-    private final OnlineUserRepository onlineUserRepository;
 
     private final InboundMessageRepository inboundMessageRepository;
 
     @Autowired
-    ChatServiceImpl(SendMessageComponent sendMessageComponent, OnlineUserRepository onlineUserRepository, InboundMessageRepository inboundMessageRepository, AppUserRepository appUserRepository){
+    ChatServiceImpl(SendMessageComponent sendMessageComponent, InboundMessageRepository inboundMessageRepository, AppUserRepository appUserRepository){
         this.sendMessageComponent = sendMessageComponent;
-        this.onlineUserRepository = onlineUserRepository;
         this.inboundMessageRepository = inboundMessageRepository;
         this.appUserRepository = appUserRepository;
     }
