@@ -29,6 +29,7 @@ Spring Boot: For building the backend application.
 Spring Security: For user authentication and authorization.
 MongoDB: For storing user data and messages.
 WebSocket: For real-time messaging functionality.
+
 **Contributors:**
 
 [Jerin Johnykutty](https://github.com/J3rryCodes)
