@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface InboundMessageRepository extends MongoRepository<InboundMessageDocument,String> {
-    List<InboundMessageDocument> findByToUserID(UUID toUserID);
+    List<InboundMessageDocument> findByToUserID(UUID toUserId);
 }

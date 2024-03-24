@@ -7,7 +7,7 @@ public class DTOToDocumentConverter {
 
     public static InboundMessageDocument covertIncomingMessageDTOToDocument(IncomingMessageDTO dto){
         final InboundMessageDocument document = new InboundMessageDocument();
-        document.setToUserID(dto.getToUserID());
+        document.setToUserID(dto.getToUserId());
         document.setType(dto.getType());
         document.setBody(dto.getBody());
         return document;

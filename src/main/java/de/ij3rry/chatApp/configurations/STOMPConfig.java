@@ -11,12 +11,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class STOMPConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry){
-        registry.addEndpoint("/message-handShake");
+        registry.addEndpoint("/user/message-handShake");
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry){
-        registry.setApplicationDestinationPrefixes("/messaging");
+        registry.setApplicationDestinationPrefixes("/user/messaging");
         registry.enableSimpleBroker("/topic","/queue","/user");
     }
 }
