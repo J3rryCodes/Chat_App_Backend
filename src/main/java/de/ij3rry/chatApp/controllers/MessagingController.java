@@ -21,7 +21,7 @@ public class MessagingController {
         chatService.handleIncomingMessage(incomingMessageDTO);
     }
 
-    @MessageMapping("/online")
+    @MessageMapping("/check-in")
     public void checkInUser(CheckInDTO checkInDTO){
         chatService.checkInUser(checkInDTO);
     }
