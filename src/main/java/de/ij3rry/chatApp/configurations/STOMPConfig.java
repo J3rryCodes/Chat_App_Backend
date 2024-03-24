@@ -19,5 +19,4 @@ public class STOMPConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes("/user/messaging");
         registry.enableSimpleBroker("/topic","/queue","/user");
     }
-
 }

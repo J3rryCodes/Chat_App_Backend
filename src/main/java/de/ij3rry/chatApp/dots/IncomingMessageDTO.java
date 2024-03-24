@@ -6,8 +6,7 @@ import java.util.UUID;
 
 @Data
 public class IncomingMessageDTO {
-    private UUID toUserID;
-    private UUID privateUserID;
+    private UUID toUserId;
     private String type;
     private Object body;
 }
