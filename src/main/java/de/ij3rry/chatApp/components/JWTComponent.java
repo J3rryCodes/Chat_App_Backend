@@ -32,6 +32,9 @@ public class JWTComponent {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.expHr}")
+    private int expHr;
+
     private static String ROLE = "role";
 
     public String extractUsername(String token) {
@@ -61,7 +64,7 @@ public class JWTComponent {
 
     private String createToken(String subject, String role) {
 
-        long tenHoursInMillis = TimeUnit.HOURS.toMillis(10);
+        long tenHoursInMillis = TimeUnit.HOURS.toMillis(expHr);
         long expDate = System.currentTimeMillis() + tenHoursInMillis;
 
         return Jwts.builder().setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
